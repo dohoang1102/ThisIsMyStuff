@@ -9,12 +9,28 @@
 #import <UIKit/UIKit.h>
 
 
-@interface NewMusicViewController : UITableViewController {
+#define kPlaceHolderTextKey	@"PlaceHolderText"
+#define kTextFieldKey		@"textField"
+
+@interface NewMusicViewController : UITableViewController <UITextFieldDelegate> {
 	NSFetchedResultsController *fetchedResultsController;
 	NSManagedObjectContext *managedObjectContext;
+	
+	NSArray		*tableDataSourceArray;
+	UITextField *titleTextField, *artistTextField, *labelTextField, *catNoTextField;
+	
 }
 
 @property(nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
 @property(nonatomic, retain) NSManagedObjectContext *managedObjectContext;
+
+@property(nonatomic, retain) UITextField *titleTextField;
+@property(nonatomic, retain) UITextField *artistTextField;
+@property(nonatomic, retain) UITextField *labelTextField;
+@property(nonatomic, retain) UITextField *catNoTextField;
+
+@property(nonatomic, retain) NSArray *tableDataSourceArray;
+
+- (UITextField *) defineTextFieldForTableCell:(UITextField *)textField;
 
 @end

@@ -38,7 +38,7 @@
 	NewMusicViewController *newMusicViewController = [[NewMusicViewController alloc]
 													  init];
 	newMusicViewController.managedObjectContext = self.managedObjectContext;
-	NSLog(@"Controller is %@", [newMusicViewController description]);
+	NSLog(@"Pushing newMusicViewController. MOC is %@", [self.managedObjectContext description]);
 	[self.navigationController pushViewController:newMusicViewController animated:YES];
 	[newMusicViewController release];
 }
@@ -76,16 +76,18 @@
 #pragma mark Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Navigation logic may go here. Create and push another view controller.
-	/*
-	 <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-	 [self.navigationController pushViewController:detailViewController animated:YES];
-	 [detailViewController release];
-	 */
+	switch ([indexPath row]) {
+		case kArtistRow: {
+			MusicArtistsViewController *artistsViewController = [[MusicArtistsViewController alloc] init];
+			[artistsViewController setManagedObjectContext:self.managedObjectContext];
+			[self.navigationController pushViewController:artistsViewController animated:YES];
+			[artistsViewController release];
+		}
+			break;
+		default:
+			break;
+	}
 }
-
 
 #pragma mark -
 #pragma mark Memory management

@@ -23,6 +23,9 @@
 		EFCDC3531234F65D00E80AC1 /* NewBookViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFCDC3511234F65D00E80AC1 /* NewBookViewController.xib */; };
 		EFCDC3581234F6F400E80AC1 /* NewMusicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFCDC3561234F6F400E80AC1 /* NewMusicViewController.m */; };
 		EFCDC3591234F6F400E80AC1 /* NewMusicViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFCDC3571234F6F400E80AC1 /* NewMusicViewController.xib */; };
+		EFCDC427123508C200E80AC1 /* Music.m in Sources */ = {isa = PBXBuildFile; fileRef = EFCDC426123508C200E80AC1 /* Music.m */; };
+		EFD9515912351CA000E318F8 /* MusicArtistsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFD9515712351CA000E318F8 /* MusicArtistsViewController.m */; };
+		EFD9515A12351CA000E318F8 /* MusicArtistsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFD9515812351CA000E318F8 /* MusicArtistsViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +53,11 @@
 		EFCDC3551234F6F400E80AC1 /* NewMusicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewMusicViewController.h; sourceTree = "<group>"; };
 		EFCDC3561234F6F400E80AC1 /* NewMusicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewMusicViewController.m; sourceTree = "<group>"; };
 		EFCDC3571234F6F400E80AC1 /* NewMusicViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NewMusicViewController.xib; path = Classes/NewMusicViewController.xib; sourceTree = "<group>"; };
+		EFCDC425123508C200E80AC1 /* Music.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Music.h; sourceTree = "<group>"; };
+		EFCDC426123508C200E80AC1 /* Music.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Music.m; sourceTree = "<group>"; };
+		EFD9515612351CA000E318F8 /* MusicArtistsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicArtistsViewController.h; sourceTree = "<group>"; };
+		EFD9515712351CA000E318F8 /* MusicArtistsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicArtistsViewController.m; sourceTree = "<group>"; };
+		EFD9515812351CA000E318F8 /* MusicArtistsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MusicArtistsViewController.xib; path = Classes/MusicArtistsViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +120,7 @@
 				2819305F112F816700ECF9B4 /* ThisIsMyStuff.xcdatamodeld */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
 				EFCDC3511234F65D00E80AC1 /* NewBookViewController.xib */,
+				EFD9515812351CA000E318F8 /* MusicArtistsViewController.xib */,
 				EFCDC2DD1234EDBB00E80AC1 /* MusicRootViewController.xib */,
 				EFCDC3571234F6F400E80AC1 /* NewMusicViewController.xib */,
 				EFCDC2EB1234EE2C00E80AC1 /* BooksRootViewController.xib */,
@@ -138,6 +147,8 @@
 				EFCDC2DC1234EDBB00E80AC1 /* MusicRootViewController.m */,
 				EFCDC3551234F6F400E80AC1 /* NewMusicViewController.h */,
 				EFCDC3561234F6F400E80AC1 /* NewMusicViewController.m */,
+				EFD9515612351CA000E318F8 /* MusicArtistsViewController.h */,
+				EFD9515712351CA000E318F8 /* MusicArtistsViewController.m */,
 			);
 			name = MusicViewControllers;
 			sourceTree = "<group>";
@@ -216,6 +227,7 @@
 				EFCDC2ED1234EE2C00E80AC1 /* BooksRootViewController.xib in Resources */,
 				EFCDC3531234F65D00E80AC1 /* NewBookViewController.xib in Resources */,
 				EFCDC3591234F6F400E80AC1 /* NewMusicViewController.xib in Resources */,
+				EFD9515A12351CA000E318F8 /* MusicArtistsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -233,6 +245,8 @@
 				EFCDC2EC1234EE2C00E80AC1 /* BooksRootViewController.m in Sources */,
 				EFCDC3521234F65D00E80AC1 /* NewBookViewController.m in Sources */,
 				EFCDC3581234F6F400E80AC1 /* NewMusicViewController.m in Sources */,
+				EFCDC427123508C200E80AC1 /* Music.m in Sources */,
+				EFD9515912351CA000E318F8 /* MusicArtistsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,6 +334,8 @@
 		2819305F112F816700ECF9B4 /* ThisIsMyStuff.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				EFCDC425123508C200E80AC1 /* Music.h */,
+				EFCDC426123508C200E80AC1 /* Music.m */,
 				28C3AD890F43EF2300507BA6 /* ThisIsMyStuff.xcdatamodel */,
 			);
 			currentVersion = 28C3AD890F43EF2300507BA6 /* ThisIsMyStuff.xcdatamodel */;

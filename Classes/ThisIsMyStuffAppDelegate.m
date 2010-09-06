@@ -20,7 +20,9 @@
 #pragma mark Application lifecycle
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    musicRootViewController.managedObjectContext = self.managedObjectContext;
+	[musicRootViewController setManagedObjectContext:self.managedObjectContext];
+	NSLog(@"My MOC is %@", [self.managedObjectContext description]);
+	NSLog(@"RootViewController's MOC is %@", [musicRootViewController.managedObjectContext description]);
 	[window addSubview:tabBarController.view];
     [window makeKeyAndVisible];    
     return YES;
