@@ -13,13 +13,15 @@
 
 @synthesize window;
 @synthesize tabBarController;
+@synthesize musicRootViewController;
 
 
 #pragma mark -
 #pragma mark Application lifecycle
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [window addSubview:tabBarController.view];
+    musicRootViewController.managedObjectContext = self.managedObjectContext;
+	[window addSubview:tabBarController.view];
     [window makeKeyAndVisible];    
     return YES;
 }

@@ -11,10 +11,11 @@
 @implementation MusicRootViewController
 
 @synthesize tableItems;
+@synthesize fetchedResultsController;
+@synthesize managedObjectContext;
 
 #pragma mark -
 #pragma mark View lifecycle
-
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -36,6 +37,7 @@
 - (void)pushAddMusicView:(id)sender {
 	NewMusicViewController *newMusicViewController = [[NewMusicViewController alloc]
 													  init];
+	newMusicViewController.managedObjectContext = self.managedObjectContext;
 	NSLog(@"Controller is %@", [newMusicViewController description]);
 	[self.navigationController pushViewController:newMusicViewController animated:YES];
 	[newMusicViewController release];

@@ -12,8 +12,13 @@
 
 @interface MusicRootViewController : UITableViewController {
 	NSArray *tableItems;
+	
+	NSFetchedResultsController *fetchedResultsController;
+	NSManagedObjectContext *managedObjectContext;
 }
 
 @property(nonatomic, retain) NSArray *tableItems;
+@property(nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
+@property(nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 
 @end
