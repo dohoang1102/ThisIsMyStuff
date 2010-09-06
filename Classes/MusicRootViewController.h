@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NewMusicViewController.h"
 
 
 @interface MusicRootViewController : UITableViewController {
-
+	NSArray *tableItems;
 }
+
+@property(nonatomic, retain) NSArray *tableItems;
 
 @end

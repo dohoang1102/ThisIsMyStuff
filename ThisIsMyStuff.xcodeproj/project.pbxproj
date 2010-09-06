@@ -19,6 +19,10 @@
 		EFCDC2DF1234EDBB00E80AC1 /* MusicRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFCDC2DD1234EDBB00E80AC1 /* MusicRootViewController.xib */; };
 		EFCDC2EC1234EE2C00E80AC1 /* BooksRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFCDC2EA1234EE2C00E80AC1 /* BooksRootViewController.m */; };
 		EFCDC2ED1234EE2C00E80AC1 /* BooksRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFCDC2EB1234EE2C00E80AC1 /* BooksRootViewController.xib */; };
+		EFCDC3521234F65D00E80AC1 /* NewBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFCDC3501234F65D00E80AC1 /* NewBookViewController.m */; };
+		EFCDC3531234F65D00E80AC1 /* NewBookViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFCDC3511234F65D00E80AC1 /* NewBookViewController.xib */; };
+		EFCDC3581234F6F400E80AC1 /* NewMusicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFCDC3561234F6F400E80AC1 /* NewMusicViewController.m */; };
+		EFCDC3591234F6F400E80AC1 /* NewMusicViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFCDC3571234F6F400E80AC1 /* NewMusicViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +44,12 @@
 		EFCDC2E91234EE2C00E80AC1 /* BooksRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BooksRootViewController.h; sourceTree = "<group>"; };
 		EFCDC2EA1234EE2C00E80AC1 /* BooksRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BooksRootViewController.m; sourceTree = "<group>"; };
 		EFCDC2EB1234EE2C00E80AC1 /* BooksRootViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = BooksRootViewController.xib; path = Classes/BooksRootViewController.xib; sourceTree = "<group>"; };
+		EFCDC34F1234F65D00E80AC1 /* NewBookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewBookViewController.h; sourceTree = "<group>"; };
+		EFCDC3501234F65D00E80AC1 /* NewBookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewBookViewController.m; sourceTree = "<group>"; };
+		EFCDC3511234F65D00E80AC1 /* NewBookViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewBookViewController.xib; sourceTree = "<group>"; };
+		EFCDC3551234F6F400E80AC1 /* NewMusicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewMusicViewController.h; sourceTree = "<group>"; };
+		EFCDC3561234F6F400E80AC1 /* NewMusicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewMusicViewController.m; sourceTree = "<group>"; };
+		EFCDC3571234F6F400E80AC1 /* NewMusicViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NewMusicViewController.xib; path = Classes/NewMusicViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,7 +111,9 @@
 			children = (
 				2819305F112F816700ECF9B4 /* ThisIsMyStuff.xcdatamodeld */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
+				EFCDC3511234F65D00E80AC1 /* NewBookViewController.xib */,
 				EFCDC2DD1234EDBB00E80AC1 /* MusicRootViewController.xib */,
+				EFCDC3571234F6F400E80AC1 /* NewMusicViewController.xib */,
 				EFCDC2EB1234EE2C00E80AC1 /* BooksRootViewController.xib */,
 				8D1107310486CEB800E47090 /* ThisIsMyStuff-Info.plist */,
 			);
@@ -124,6 +136,8 @@
 			children = (
 				EFCDC2DB1234EDBB00E80AC1 /* MusicRootViewController.h */,
 				EFCDC2DC1234EDBB00E80AC1 /* MusicRootViewController.m */,
+				EFCDC3551234F6F400E80AC1 /* NewMusicViewController.h */,
+				EFCDC3561234F6F400E80AC1 /* NewMusicViewController.m */,
 			);
 			name = MusicViewControllers;
 			sourceTree = "<group>";
@@ -132,6 +146,8 @@
 			isa = PBXGroup;
 			children = (
 				EFCDC2E91234EE2C00E80AC1 /* BooksRootViewController.h */,
+				EFCDC34F1234F65D00E80AC1 /* NewBookViewController.h */,
+				EFCDC3501234F65D00E80AC1 /* NewBookViewController.m */,
 				EFCDC2EA1234EE2C00E80AC1 /* BooksRootViewController.m */,
 			);
 			name = BooksViewControllers;
@@ -198,6 +214,8 @@
 				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
 				EFCDC2DF1234EDBB00E80AC1 /* MusicRootViewController.xib in Resources */,
 				EFCDC2ED1234EE2C00E80AC1 /* BooksRootViewController.xib in Resources */,
+				EFCDC3531234F65D00E80AC1 /* NewBookViewController.xib in Resources */,
+				EFCDC3591234F6F400E80AC1 /* NewMusicViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -213,6 +231,8 @@
 				28193060112F816700ECF9B4 /* ThisIsMyStuff.xcdatamodeld in Sources */,
 				EFCDC2DE1234EDBB00E80AC1 /* MusicRootViewController.m in Sources */,
 				EFCDC2EC1234EE2C00E80AC1 /* BooksRootViewController.m in Sources */,
+				EFCDC3521234F65D00E80AC1 /* NewBookViewController.m in Sources */,
+				EFCDC3581234F6F400E80AC1 /* NewMusicViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
