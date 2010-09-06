@@ -12,17 +12,15 @@
 @implementation ThisIsMyStuffAppDelegate
 
 @synthesize window;
+@synthesize tabBarController;
 
 
 #pragma mark -
 #pragma mark Application lifecycle
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
-    
-    // Override point for customization after application launch.
-    
-    [window makeKeyAndVisible];
-    
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [window addSubview:tabBarController.view];
+    [window makeKeyAndVisible];    
     return YES;
 }
 
