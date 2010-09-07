@@ -1,14 +1,15 @@
 //
-//  MusicArtistsViewController.m
+//  MusicLabelsViewController.m
 //  ThisIsMyStuff
 //
 //  Created by Eifion Bedford on 06/09/2010.
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 
-#import "MusicArtistsViewController.h"
+#import "MusicLabelsViewController.h"
 
-@implementation MusicArtistsViewController
+
+@implementation MusicLabelsViewController
 
 @synthesize fetchedResultsController;
 @synthesize managedObjectContext;
@@ -16,18 +17,15 @@
 #pragma mark -
 #pragma mark View lifecycle
 
-
 - (void)viewDidLoad {
-    [super viewDidLoad];
-	self.navigationItem.title = @"Music by artist.";
-	
-	// Get the music items by artist.
+    [super viewDidLoad];	
+	self.navigationItem.title = @"Music by label"; 
 	NSError *error;
-	if(![[self fetchedResultsController] performFetch:&error]) {
+	
+	if (![[self fetchedResultsController] performFetch:&error]) {
 		NSLog(@"Error fetching items: %@", [error description]);
 	}
 }
-
 
 /*
 - (void)viewWillAppear:(BOOL)animated {
@@ -57,16 +55,15 @@
 }
 */
 
-
 #pragma mark -
 #pragma mark Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-	NSInteger count = [[fetchedResultsController sections] count];
+    NSInteger count = [[fetchedResultsController sections] count];
 	if (count == 0) {
 		count = 1;
 	}
-	return count;
+    return count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -81,20 +78,19 @@
 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    static NSString *CellIdentifier = @"ArtistsCell";
+    NSLog(@"tableView:cellForRowAtIndexPath:");
+    static NSString *CellIdentifier = @"LabelCell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
-	
-	Music *music = (Music *)[fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = [music artist];
-	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
+	NSLog(@" %@", [fetchedResultsController objectAtIndexPath:indexPath]);
+	cell.textLabel.text = [[fetchedResultsController objectAtIndexPath:indexPath] valueForKey:@"label"];
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
-
 
 /*
 // Override to support conditional editing of the table view.
@@ -149,17 +145,21 @@
 	 [detailViewController release];
 	 */
 }
-
+		  
 #pragma mark -
 #pragma mark Fetched Results Controller
 - (NSFetchedResultsController *)fetchedResultsController {
+	NSLog(@"fetchedResultsController");
 	if (fetchedResultsController == nil) {
 		NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
 		NSEntityDescription *musicEntity = [NSEntityDescription entityForName:@"Music" inManagedObjectContext:managedObjectContext];
 		[fetchRequest setEntity:musicEntity];
+		[fetchRequest setResultType:NSDictionaryResultType];
+		[fetchRequest setReturnsDistinctResults:YES];
+		[fetchRequest setPropertiesToFetch:[NSArray arrayWithObject:@"label"]];
 		
-		// Sorting
-		NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"artist" ascending:YES];
+		// Sort by label.
+		NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"label" ascending:YES];
 		NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
 		[fetchRequest setSortDescriptors:sortDescriptors];
 		
@@ -170,7 +170,6 @@
 																 cacheName:nil];
 		aFetchedResultsController.delegate = self;
 		self.fetchedResultsController = aFetchedResultsController;
-		
 		[aFetchedResultsController release];
 		[fetchRequest release];
 		[sortDescriptor release];
@@ -178,6 +177,7 @@
 	}
 	return fetchedResultsController;
 }
+
 
 #pragma mark -
 #pragma mark Memory management

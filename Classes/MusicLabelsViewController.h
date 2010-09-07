@@ -1,5 +1,5 @@
 //
-//  MusicRootViewController.h
+//  MusicLabelsViewController.h
 //  ThisIsMyStuff
 //
 //  Created by Eifion Bedford on 06/09/2010.
@@ -7,24 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "NewMusicViewController.h"
-#import "MusicArtistsViewController.h"
-#import "MusicLabelsViewController.h"
-
-#define kArtistRow	0
-#define kLabelRow	1
+#import "Music.h"
 
 
-@interface MusicRootViewController : UITableViewController {
-	NSArray *tableItems;
-	
+@interface MusicLabelsViewController : UITableViewController <NSFetchedResultsControllerDelegate> {
 	NSFetchedResultsController *fetchedResultsController;
 	NSManagedObjectContext *managedObjectContext;
-	
-	
 }
 
-@property(nonatomic, retain) NSArray *tableItems;
 @property(nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
 @property(nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 

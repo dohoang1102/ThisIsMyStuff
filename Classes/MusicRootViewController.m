@@ -84,6 +84,13 @@
 			[artistsViewController release];
 		}
 			break;
+		case kLabelRow: {
+			MusicLabelsViewController *labelsViewController = [[MusicLabelsViewController alloc] init];
+			[labelsViewController setManagedObjectContext:self.managedObjectContext];
+			[self.navigationController pushViewController:labelsViewController animated:YES];
+			[labelsViewController release];
+		}
+			break;
 		default:
 			break;
 	}
