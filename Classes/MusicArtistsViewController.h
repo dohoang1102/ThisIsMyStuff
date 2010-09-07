@@ -12,10 +12,11 @@
 @interface MusicArtistsViewController : UITableViewController <NSFetchedResultsControllerDelegate> {
 	NSFetchedResultsController *fetchedResultsController;
 	NSManagedObjectContext *managedObjectContext;
+	NSString *labelFilter;
 }
 
 @property(nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
 @property(nonatomic, retain) NSManagedObjectContext *managedObjectContext;
-
+@property(nonatomic, retain) NSString *labelFilter;
 
 @end

@@ -7,11 +7,13 @@
 //
 
 #import "MusicArtistsViewController.h"
+#import "MusicItemViewController.h"
 
 @implementation MusicArtistsViewController
 
 @synthesize fetchedResultsController;
 @synthesize managedObjectContext;
+@synthesize labelFilter;
 
 #pragma mark -
 #pragma mark View lifecycle
@@ -89,65 +91,22 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
 	
-	Music *music = (Music *)[fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = [music artist];
+    cell.textLabel.text = [[fetchedResultsController objectAtIndexPath:indexPath] valueForKey:@"artist"];
 	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
-
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
 
 #pragma mark -
 #pragma mark Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Navigation logic may go here. Create and push another view controller.
-	/*
-	 <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-	 [self.navigationController pushViewController:detailViewController animated:YES];
-	 [detailViewController release];
-	 */
+	NSString *artistFilter = [[fetchedResultsController objectAtIndexPath:indexPath] valueForKey:@"artist"];
+	
+	MusicItemViewController *itemViewController = [[MusicItemViewController alloc] init];
+	[itemViewController setManagedObjectContext:self.managedObjectContext];
+	itemViewController.artistFilter = artistFilter;
+	[self.navigationController pushViewController:itemViewController animated:YES];
+	[itemViewController release];
 }
 
 #pragma mark -
@@ -157,9 +116,21 @@
 		NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
 		NSEntityDescription *musicEntity = [NSEntityDescription entityForName:@"Music" inManagedObjectContext:managedObjectContext];
 		[fetchRequest setEntity:musicEntity];
+		[fetchRequest setResultType:NSDictionaryResultType];
+		[fetchRequest setReturnsDistinctResults:YES];
+		[fetchRequest setPropertiesToFetch:[NSArray arrayWithObject:@"artist"]];
 		
-		// Sorting
-		NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"artist" ascending:YES];
+		// Filter by label if necessary.
+		if (self.labelFilter != nil) {
+			NSPredicate *labelPredicate = [NSPredicate predicateWithFormat:@"label = %@", self.labelFilter];
+			[fetchRequest setPredicate:labelPredicate];
+		}
+		
+		// Sort by artist
+		NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] 
+											initWithKey:@"artist" 
+											ascending:YES
+											selector:@selector(localizedCaseInsensitiveCompare:)];
 		NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
 		[fetchRequest setSortDescriptors:sortDescriptors];
 		

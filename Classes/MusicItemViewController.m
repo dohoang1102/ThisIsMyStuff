@@ -1,31 +1,33 @@
 //
-//  MusicLabelsViewController.m
+//  MusicItemViewController.m
 //  ThisIsMyStuff
 //
-//  Created by Eifion Bedford on 06/09/2010.
+//  Created by Eifion Bedford on 07/09/2010.
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 
-#import "MusicLabelsViewController.h"
-#import "MusicArtistsViewController.h"
+#import "MusicItemViewController.h"
 
-@implementation MusicLabelsViewController
+
+@implementation MusicItemViewController
 
 @synthesize fetchedResultsController;
 @synthesize managedObjectContext;
+@synthesize artistFilter;
 
 #pragma mark -
 #pragma mark View lifecycle
 
+
 - (void)viewDidLoad {
-    [super viewDidLoad];	
-	self.navigationItem.title = @"Music by label"; 
-	NSError *error;
+    [super viewDidLoad];
 	
+	NSError *error;
 	if (![[self fetchedResultsController] performFetch:&error]) {
 		NSLog(@"Error fetching items: %@", [error description]);
 	}
 }
+
 
 /*
 - (void)viewWillAppear:(BOOL)animated {
@@ -55,6 +57,7 @@
 }
 */
 
+
 #pragma mark -
 #pragma mark Table view data source
 
@@ -63,11 +66,12 @@
 	if (count == 0) {
 		count = 1;
 	}
-    return count;
+	return count;
 }
 
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	NSInteger numberOfRows = 0;
+    NSInteger numberOfRows = 0;
 	if ([[fetchedResultsController sections] count] > 0) {
 		id <NSFetchedResultsSectionInfo> sectionInfo = [[fetchedResultsController sections] objectAtIndex:section];
 		numberOfRows = [sectionInfo numberOfObjects];
@@ -78,48 +82,95 @@
 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"tableView:cellForRowAtIndexPath:");
-    static NSString *CellIdentifier = @"LabelCell";
+    
+    static NSString *CellIdentifier = @"Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     
-	cell.textLabel.text = [[fetchedResultsController objectAtIndexPath:indexPath] valueForKey:@"label"];
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+	cell.textLabel.text = [[fetchedResultsController objectAtIndexPath:indexPath] valueForKey:@"title"];
+	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
+
+
+/*
+// Override to support conditional editing of the table view.
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Return NO if you do not want the specified item to be editable.
+    return YES;
+}
+*/
+
+
+/*
+// Override to support editing the table view.
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        // Delete the row from the data source
+        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    }   
+    else if (editingStyle == UITableViewCellEditingStyleInsert) {
+        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+    }   
+}
+*/
+
+
+/*
+// Override to support rearranging the table view.
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+}
+*/
+
+
+/*
+// Override to support conditional rearranging of the table view.
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Return NO if you do not want the item to be re-orderable.
+    return YES;
+}
+*/
+
 
 #pragma mark -
 #pragma mark Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	
-	NSString *selectedLabel = [[fetchedResultsController objectAtIndexPath:indexPath] valueForKey:@"label"];
-	MusicArtistsViewController *artistsViewContrller = [[MusicArtistsViewController alloc] init];
-	[artistsViewContrller setManagedObjectContext:self.managedObjectContext];
-	[artistsViewContrller setLabelFilter:selectedLabel];
-	[self.navigationController pushViewController:artistsViewContrller animated:YES];
-	[artistsViewContrller release];
+    // Navigation logic may go here. Create and push another view controller.
+	/*
+	 <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
+     // ...
+     // Pass the selected object to the new view controller.
+	 [self.navigationController pushViewController:detailViewController animated:YES];
+	 [detailViewController release];
+	 */
 }
-		  
+
 #pragma mark -
 #pragma mark Fetched Results Controller
 - (NSFetchedResultsController *)fetchedResultsController {
-	NSLog(@"fetchedResultsController");
 	if (fetchedResultsController == nil) {
 		NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
 		NSEntityDescription *musicEntity = [NSEntityDescription entityForName:@"Music" inManagedObjectContext:managedObjectContext];
 		[fetchRequest setEntity:musicEntity];
 		[fetchRequest setResultType:NSDictionaryResultType];
 		[fetchRequest setReturnsDistinctResults:YES];
-		[fetchRequest setPropertiesToFetch:[NSArray arrayWithObject:@"label"]];
+		[fetchRequest setPropertiesToFetch:[NSArray arrayWithObject:@"title"]];
 		
-		// Sort by label.
-		NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] 
-											initWithKey:@"label" 
-											ascending:YES 
+		// TODO: Filter by artist (and maybe label)
+		if (self.artistFilter != nil) {
+			NSPredicate *artistPredicate = [NSPredicate predicateWithFormat:@"artist = %@", self.artistFilter];
+			[fetchRequest setPredicate:artistPredicate];
+		}
+		
+		// Sort by title.
+		NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc]
+											initWithKey:@"title" 
+											ascending:YES
 											selector:@selector(localizedCaseInsensitiveCompare:)];
 		NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
 		[fetchRequest setSortDescriptors:sortDescriptors];
@@ -131,6 +182,7 @@
 																 cacheName:nil];
 		aFetchedResultsController.delegate = self;
 		self.fetchedResultsController = aFetchedResultsController;
+		
 		[aFetchedResultsController release];
 		[fetchRequest release];
 		[sortDescriptor release];
