@@ -14,7 +14,7 @@
 @synthesize fetchedResultsController;
 @synthesize managedObjectContext;
 
-@synthesize titleTextField, artistTextField, labelTextField, catNoTextField;
+@synthesize titleTextView, artistTextView, labelTextView, catNoTextView;
 @synthesize tableDataSourceArray;
 
 #pragma mark -
@@ -27,19 +27,19 @@
 	self.tableDataSourceArray = [NSArray arrayWithObjects:
 								 [NSDictionary dictionaryWithObjectsAndKeys:
 								  @"Title",				kPlaceHolderTextKey,
-								  self.titleTextField,	kTextFieldKey,
+								  self.titleTextView,	kTextViewKey,
 								  nil],
 								 [NSDictionary dictionaryWithObjectsAndKeys:
 								  @"Artist",			kPlaceHolderTextKey,
-								  self.artistTextField,	kTextFieldKey,
+								  self.artistTextView,	kTextViewKey,
 								  nil],
 								 [NSDictionary dictionaryWithObjectsAndKeys:
 								  @"Label",				kPlaceHolderTextKey,
-								  self.labelTextField,	kTextFieldKey,
+								  self.labelTextView,	kTextViewKey,
 								  nil],
 								 [NSDictionary dictionaryWithObjectsAndKeys:
 								  @"Catalogue Number",	kPlaceHolderTextKey,
-								  self.catNoTextField,	kTextFieldKey,
+								  self.catNoTextView,	kTextViewKey,
 								  nil],
 								 nil];
 	self.navigationItem.title = @"Add New Item";
@@ -51,6 +51,13 @@
 	
 	self.navigationItem.rightBarButtonItem = addButton;
 	[addButton release];
+	
+	// TODO: Will this leak?
+	[[NSNotificationCenter defaultCenter] addObserver:self 
+											 selector:@selector(textViewDidChange:) 
+												 name:@"UITextViewTextDidChangeNotification" 
+											   object:nil];
+	
 	NSLog(@"NewMusicViewController viewDidLoad end");
 }
 
@@ -62,53 +69,44 @@
 }
 */
 
-#pragma mark -
-#pragma mark TextFields
-
-- (UITextField *)titleTextField {
-	if (titleTextField == nil) {
-		CGRect frame = CGRectMake(25, 8.0, 260, 30); // TODO: Constants. Also, rotation.
-		titleTextField = [[UITextField alloc] initWithFrame:frame];
-		titleTextField.borderStyle = UITextBorderStyleNone;
-		titleTextField.autocorrectionType = UITextAutocorrectionTypeNo;
-		titleTextField.delegate = self;
-	}
-	return titleTextField;
+- (void)textViewDidChange:(id)sender {
+	//UITextView *changedTextView = (UITextView *)sender;
+	//NSLog(@"%@ changed", [changedTextView tag]);
+	NSLog(@"changy");
 }
 
-- (UITextField *)artistTextField {
-	if (artistTextField == nil) {
-		CGRect frame = CGRectMake(25, 8.0, 260, 30); // TODO: Constants. Also, rotation.
-		artistTextField = [[UITextField alloc] initWithFrame:frame];
-		artistTextField.borderStyle = UITextBorderStyleNone;
-		artistTextField.autocorrectionType = UITextAutocorrectionTypeNo;
-		artistTextField.delegate = self;
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+	NSLog(@"shouldChangeTextInRange: %@", text);
+	if ([text isEqualToString:@"\n"]) {
+		[textView resignFirstResponder];		
+		// What should be focussed next?
+		switch ([textView tag]) {
+			case kTitleTextView: {
+				[artistTextView becomeFirstResponder];
+			}
+				break;
+			case kArtistTextView: {
+				[labelTextView becomeFirstResponder];
+			}
+				break;
+			case kLabelTextView:{
+				[catNoTextView becomeFirstResponder];
+			}
+				break;
+			case kCatNoTextView: {
+				[titleTextView becomeFirstResponder];
+			}
+				break;
+			default:
+				break;
+		}
+		return NO;
 	}
-	return artistTextField;
+	else {
+		return YES;
+	}
 }
 
-- (UITextField *)labelTextField {
-	if (labelTextField == nil) {
-		CGRect frame = CGRectMake(25, 8.0, 260, 30); // TODO: Constants. Also, rotation.
-		labelTextField = [[UITextField alloc] initWithFrame:frame];
-		labelTextField.borderStyle = UITextBorderStyleNone;
-		labelTextField.autocorrectionType = UITextAutocorrectionTypeNo;
-		labelTextField.delegate = self;
-	}
-	return labelTextField;
-	
-}
-
-- (UITextField *)catNoTextField {
-	if (catNoTextField == nil) {
-		CGRect frame = CGRectMake(25, 8.0, 260, 30); // TODO: Constants. Also, rotation.
-		catNoTextField = [[UITextField alloc] initWithFrame:frame];
-		catNoTextField.borderStyle = UITextBorderStyleNone;
-		catNoTextField.autocorrectionType = UITextAutocorrectionTypeNo;
-		catNoTextField.delegate = self;
-	}
-	return catNoTextField;
-}
 
 #pragma mark -
 #pragma mark Table view data source
@@ -133,23 +131,10 @@
     }
 	
 	NSUInteger row = [indexPath row];
-	UITextField *textField = [[self.tableDataSourceArray objectAtIndex:row] valueForKey:kTextFieldKey];
-    textField.placeholder =  [[self.tableDataSourceArray objectAtIndex:row] valueForKey:kPlaceHolderTextKey];
-    [cell.contentView addSubview:textField];
+	UITextView *textView = [[self.tableDataSourceArray objectAtIndex:row] valueForKey:kTextViewKey];
+    // textView.placeholder =  [[self.tableDataSourceArray objectAtIndex:row] valueForKey:kPlaceHolderTextKey];
+    [cell.contentView addSubview:textView];
     return cell;
-}
-
-#pragma mark -
-#pragma mark Create Text Field For Cell
-- (UITextField *) defineTextFieldForTableCell:(UITextField *)textField {
-	if (textField == nil) {
-		CGRect frame = CGRectMake(25, 8.0, 260, 30); // TODO: Constants. Also, rotation.
-		textField = [[UITextField alloc] initWithFrame:frame];
-		textField.borderStyle = UITextBorderStyleNone;
-		textField.autocorrectionType = UITextAutocorrectionTypeNo;
-		textField.delegate = self;
-	}
-	return textField;
 }
 
 #pragma mark -
@@ -159,10 +144,10 @@
 	Music *newMusic = [NSEntityDescription insertNewObjectForEntityForName:@"Music" 
 													inManagedObjectContext:self.managedObjectContext];
 
-	[newMusic setTitle:[titleTextField text]];
-	[newMusic setArtist:[artistTextField text]];
-	[newMusic setLabel:[labelTextField text]];
-	[newMusic setCatNo:[catNoTextField text]];
+	[newMusic setTitle:[titleTextView text]];
+	[newMusic setArtist:[artistTextView text]];
+	[newMusic setLabel:[labelTextView text]];
+	[newMusic setCatNo:[catNoTextView text]];
 	
 	NSLog(@"NewMusic is %@", [newMusic description]);
 	

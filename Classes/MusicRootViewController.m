@@ -35,11 +35,9 @@
 #pragma mark -
 #pragma mark Add Item
 - (void)pushAddMusicView:(id)sender {
-	NewMusicViewController *newMusicViewController = [[NewMusicViewController alloc]
-													  init];
+	NewMusicViewController *newMusicViewController = [[NewMusicViewController alloc] init];
 	newMusicViewController.managedObjectContext = self.managedObjectContext;
-	NSLog(@"Pushing newMusicViewController. MOC is %@", [self.managedObjectContext description]);
-	[self.navigationController pushViewController:newMusicViewController animated:YES];
+	[self presentModalViewController:newMusicViewController animated:YES];
 	[newMusicViewController release];
 }
 

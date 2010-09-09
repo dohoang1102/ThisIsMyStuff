@@ -10,27 +10,30 @@
 
 
 #define kPlaceHolderTextKey	@"PlaceHolderText"
-#define kTextFieldKey		@"textField"
+#define kTextViewKey		@"textView"
 
-@interface NewMusicViewController : UITableViewController <UITextFieldDelegate> {
+#define kTitleTextView		0
+#define kArtistTextView		1
+#define kLabelTextView		2
+#define kCatNoTextView		3
+
+@interface NewMusicViewController : UIViewController <UITextViewDelegate> {
 	NSFetchedResultsController *fetchedResultsController;
 	NSManagedObjectContext *managedObjectContext;
 	
 	NSArray		*tableDataSourceArray;
-	UITextField *titleTextField, *artistTextField, *labelTextField, *catNoTextField;
+	UITextView *titleTextView, *artistTextView, *labelTextView, *catNoTextView;
 	
 }
 
 @property(nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
 @property(nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 
-@property(nonatomic, retain) UITextField *titleTextField;
-@property(nonatomic, retain) UITextField *artistTextField;
-@property(nonatomic, retain) UITextField *labelTextField;
-@property(nonatomic, retain) UITextField *catNoTextField;
+@property(nonatomic, retain) IBOutlet UITextView *titleTextView;
+@property(nonatomic, retain) IBOutlet UITextView *artistTextView;
+@property(nonatomic, retain) IBOutlet UITextView *labelTextView;
+@property(nonatomic, retain) IBOutlet UITextView *catNoTextView;
 
 @property(nonatomic, retain) NSArray *tableDataSourceArray;
-
-- (UITextField *) defineTextFieldForTableCell:(UITextField *)textField;
 
 @end
