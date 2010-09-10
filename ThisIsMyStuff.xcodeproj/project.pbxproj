@@ -19,6 +19,8 @@
 		EF213B18123683A500181E28 /* MusicItemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF213B16123683A500181E28 /* MusicItemViewController.xib */; };
 		EF3C348D1235A0E6007005DC /* MusicLabelsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF3C348B1235A0E6007005DC /* MusicLabelsViewController.m */; };
 		EF3C348E1235A0E6007005DC /* MusicLabelsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF3C348C1235A0E6007005DC /* MusicLabelsViewController.xib */; };
+		EF7C61031239839B003C6EB8 /* AddItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7C61021239839B003C6EB8 /* AddItemCell.m */; };
+		EF7C6105123983CA003C6EB8 /* AddItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF7C6104123983CA003C6EB8 /* AddItemCell.xib */; };
 		EFCDC2DE1234EDBB00E80AC1 /* MusicRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFCDC2DC1234EDBB00E80AC1 /* MusicRootViewController.m */; };
 		EFCDC2DF1234EDBB00E80AC1 /* MusicRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFCDC2DD1234EDBB00E80AC1 /* MusicRootViewController.xib */; };
 		EFCDC2EC1234EE2C00E80AC1 /* BooksRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFCDC2EA1234EE2C00E80AC1 /* BooksRootViewController.m */; };
@@ -51,6 +53,9 @@
 		EF3C348A1235A0E6007005DC /* MusicLabelsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicLabelsViewController.h; sourceTree = "<group>"; };
 		EF3C348B1235A0E6007005DC /* MusicLabelsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicLabelsViewController.m; sourceTree = "<group>"; };
 		EF3C348C1235A0E6007005DC /* MusicLabelsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MusicLabelsViewController.xib; path = Classes/MusicLabelsViewController.xib; sourceTree = "<group>"; };
+		EF7C61011239839B003C6EB8 /* AddItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddItemCell.h; sourceTree = "<group>"; };
+		EF7C61021239839B003C6EB8 /* AddItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddItemCell.m; sourceTree = "<group>"; };
+		EF7C6104123983CA003C6EB8 /* AddItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddItemCell.xib; sourceTree = "<group>"; };
 		EFCDC2DB1234EDBB00E80AC1 /* MusicRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicRootViewController.h; sourceTree = "<group>"; };
 		EFCDC2DC1234EDBB00E80AC1 /* MusicRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicRootViewController.m; sourceTree = "<group>"; };
 		EFCDC2DD1234EDBB00E80AC1 /* MusicRootViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MusicRootViewController.xib; sourceTree = "<group>"; };
@@ -88,6 +93,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				EF7C6100123981BB003C6EB8 /* Table Cells */,
 				EFCDC3011234EED500E80AC1 /* Main Window */,
 				EFCDC2E81234EE1D00E80AC1 /* BooksViewControllers */,
 				EFCDC2E01234EDC900E80AC1 /* MusicViewControllers */,
@@ -150,6 +156,16 @@
 				28D801B30F44B63D00FB423F /* CoreData.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		EF7C6100123981BB003C6EB8 /* Table Cells */ = {
+			isa = PBXGroup;
+			children = (
+				EF7C61011239839B003C6EB8 /* AddItemCell.h */,
+				EF7C61021239839B003C6EB8 /* AddItemCell.m */,
+				EF7C6104123983CA003C6EB8 /* AddItemCell.xib */,
+			);
+			name = "Table Cells";
 			sourceTree = "<group>";
 		};
 		EFCDC2E01234EDC900E80AC1 /* MusicViewControllers */ = {
@@ -246,6 +262,7 @@
 				EFD9515A12351CA000E318F8 /* MusicArtistsViewController.xib in Resources */,
 				EF3C348E1235A0E6007005DC /* MusicLabelsViewController.xib in Resources */,
 				EF213B18123683A500181E28 /* MusicItemViewController.xib in Resources */,
+				EF7C6105123983CA003C6EB8 /* AddItemCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -267,6 +284,7 @@
 				EFD9515912351CA000E318F8 /* MusicArtistsViewController.m in Sources */,
 				EF3C348D1235A0E6007005DC /* MusicLabelsViewController.m in Sources */,
 				EF213B17123683A500181E28 /* MusicItemViewController.m in Sources */,
+				EF7C61031239839B003C6EB8 /* AddItemCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

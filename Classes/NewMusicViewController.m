@@ -14,8 +14,9 @@
 @synthesize fetchedResultsController;
 @synthesize managedObjectContext;
 
+@synthesize theTableView;
+@synthesize tableLabelNamesArray;
 @synthesize titleTextView, artistTextView, labelTextView, catNoTextView;
-@synthesize tableDataSourceArray;
 
 #pragma mark -
 #pragma mark View lifecycle
@@ -23,25 +24,9 @@
 
 - (void)viewDidLoad {
 	NSLog(@"NewMusicViewController viewDidLoad start");
+		
     [super viewDidLoad];
-	self.tableDataSourceArray = [NSArray arrayWithObjects:
-								 [NSDictionary dictionaryWithObjectsAndKeys:
-								  @"Title",				kPlaceHolderTextKey,
-								  self.titleTextView,	kTextViewKey,
-								  nil],
-								 [NSDictionary dictionaryWithObjectsAndKeys:
-								  @"Artist",			kPlaceHolderTextKey,
-								  self.artistTextView,	kTextViewKey,
-								  nil],
-								 [NSDictionary dictionaryWithObjectsAndKeys:
-								  @"Label",				kPlaceHolderTextKey,
-								  self.labelTextView,	kTextViewKey,
-								  nil],
-								 [NSDictionary dictionaryWithObjectsAndKeys:
-								  @"Catalogue Number",	kPlaceHolderTextKey,
-								  self.catNoTextView,	kTextViewKey,
-								  nil],
-								 nil];
+	self.tableLabelNamesArray = [NSArray arrayWithObjects: @"Title", @"Artist", @"Label", @"Cat No", nil];
 	self.navigationItem.title = @"Add New Item";
 	
 	UIBarButtonItem	*addButton = [[UIBarButtonItem alloc]
@@ -60,6 +45,18 @@
 	
 	NSLog(@"NewMusicViewController viewDidLoad end");
 }
+
+- (IBAction)save:(id)sender {
+	NSLog(@"save");
+	[self createNewMusic];
+	[self dismissModalViewControllerAnimated:YES];
+}
+- (IBAction)cancel:(id)sender {
+	NSLog(@"cancel");
+	[self dismissModalViewControllerAnimated:YES];	
+}
+
+
 
 /*
 // Override to allow orientations other than the default portrait orientation.
@@ -107,7 +104,6 @@
 	}
 }
 
-
 #pragma mark -
 #pragma mark Table view data source
 
@@ -116,46 +112,58 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.tableDataSourceArray count];
+    return [self.tableLabelNamesArray count];
 }
 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    static NSString *CellIdentifier = @"NewMusicCell";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    NSLog(@"Adding a table cell.");
+    static NSString *CellIdentifier = @"AddItemCell";
+    AddItemCell *cell = (AddItemCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-		cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    }
-	
-	NSUInteger row = [indexPath row];
-	UITextView *textView = [[self.tableDataSourceArray objectAtIndex:row] valueForKey:kTextViewKey];
-    // textView.placeholder =  [[self.tableDataSourceArray objectAtIndex:row] valueForKey:kPlaceHolderTextKey];
-    [cell.contentView addSubview:textView];
+		NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"AddItemCell" owner:self options:nil];
+		for (id anObject in nib) {
+			if ([anObject isKindOfClass:[AddItemCell class]]) {
+				cell = (AddItemCell *)anObject;
+			}
+		}		
+	}
+	NSUInteger row = [indexPath row];	
+	cell.label.text = [self.tableLabelNamesArray objectAtIndex: row];
+	cell.textView.text = @"";
     return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+	return kTableCellHeight;
 }
 
 #pragma mark -
 #pragma mark Add Item
--(void)addMusic:(id)selector {
+- (void)createNewMusic {
 	NSLog(@"MOC is %@", [self.managedObjectContext description]);
 	Music *newMusic = [NSEntityDescription insertNewObjectForEntityForName:@"Music" 
 													inManagedObjectContext:self.managedObjectContext];
-
-	[newMusic setTitle:[titleTextView text]];
-	[newMusic setArtist:[artistTextView text]];
-	[newMusic setLabel:[labelTextView text]];
-	[newMusic setCatNo:[catNoTextView text]];
 	
-	NSLog(@"NewMusic is %@", [newMusic description]);
+	// Populate the new item from the table cells.	
+	AddItemCell *cell;
+	
+	cell = (AddItemCell *)[self.theTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:kTitleTextView inSection:0]];
+	newMusic.title = cell.textView.text;
+
+	cell = (AddItemCell *)[self.theTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:kArtistT inSection:0]];
+	newMusic.artist = cell.textView.text;
+
+	cell = (AddItemCell *)[self.theTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:kLabelTextView inSection:0]];
+	newMusic.label = cell.textView.text;
+
+	cell = (AddItemCell *)[self.theTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:kCatNoTextView inSection:0]];
+	newMusic.catNo = cell.textView.text;
 	
 	NSError *error;
 	if (![managedObjectContext save:&error]) {
 		NSLog(@"Error saving: %@", [error description]);
 	}
-	[self.navigationController popViewControllerAnimated:YES];
 }
 
 

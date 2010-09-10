@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "AddItemCell.h"
 
 #define kPlaceHolderTextKey	@"PlaceHolderText"
 #define kTextViewKey		@"textView"
@@ -17,23 +17,31 @@
 #define kLabelTextView		2
 #define kCatNoTextView		3
 
+#define kTableCellHeight	52
+
 @interface NewMusicViewController : UIViewController <UITextViewDelegate> {
 	NSFetchedResultsController *fetchedResultsController;
-	NSManagedObjectContext *managedObjectContext;
-	
-	NSArray		*tableDataSourceArray;
-	UITextView *titleTextView, *artistTextView, *labelTextView, *catNoTextView;
-	
+	NSManagedObjectContext     *managedObjectContext;
+
+	NSArray		*tableLabelNamesArray;	
+	UITableView *theTableView;	
+	UITextView  *titleTextView, *artistTextView, *labelTextView, *catNoTextView;
 }
 
 @property(nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
 @property(nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 
-@property(nonatomic, retain) IBOutlet UITextView *titleTextView;
-@property(nonatomic, retain) IBOutlet UITextView *artistTextView;
-@property(nonatomic, retain) IBOutlet UITextView *labelTextView;
-@property(nonatomic, retain) IBOutlet UITextView *catNoTextView;
+@property(nonatomic, retain) IBOutlet UITableView *theTableView;
+@property(nonatomic, retain) IBOutlet UITextView  *titleTextView;
+@property(nonatomic, retain) IBOutlet UITextView  *artistTextView;
+@property(nonatomic, retain) IBOutlet UITextView  *labelTextView;
+@property(nonatomic, retain) IBOutlet UITextView  *catNoTextView;
 
-@property(nonatomic, retain) NSArray *tableDataSourceArray;
+@property(nonatomic, retain) NSArray *tableLabelNamesArray;
+
+- (void)createNewMusic;
+
+- (IBAction)save:(id)sender;
+- (IBAction)cancel:(id)sender;
 
 @end
