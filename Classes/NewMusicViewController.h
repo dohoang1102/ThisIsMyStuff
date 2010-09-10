@@ -25,21 +25,15 @@
 
 	NSArray		*tableLabelNamesArray;	
 	UITableView *theTableView;	
-	UITextView  *titleTextView, *artistTextView, *labelTextView, *catNoTextView;
 }
 
 @property(nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
 @property(nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 
 @property(nonatomic, retain) IBOutlet UITableView *theTableView;
-@property(nonatomic, retain) IBOutlet UITextView  *titleTextView;
-@property(nonatomic, retain) IBOutlet UITextView  *artistTextView;
-@property(nonatomic, retain) IBOutlet UITextView  *labelTextView;
-@property(nonatomic, retain) IBOutlet UITextView  *catNoTextView;
-
 @property(nonatomic, retain) NSArray *tableLabelNamesArray;
 
-- (void)createNewMusic;
+- (BOOL)createNewMusic;
 
 - (IBAction)save:(id)sender;
 - (IBAction)cancel:(id)sender;
