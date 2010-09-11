@@ -68,13 +68,14 @@
 
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
-		
+	
+	// These are multi-line text fields that we're making behave like a single line ones
+	// So if Enter is pressed moved to the next field.
 	if ([text isEqualToString:@"\n"]) {
 		[textView resignFirstResponder];		
 
 		// What should be focussed next?
 		NSUInteger nextTextField = 0;
-		NSLog(@"Current text view's tag is %d", [textView tag]);
 		switch ([textView tag]) {
 			case kTitleTextView: {
 				nextTextField = kArtistTextView;
@@ -95,47 +96,45 @@
 			default:
 				break;
 		}
-		NSLog(@"Next field is %d", nextTextField);
 		AddItemCell *cell = (AddItemCell *)[self.theTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:nextTextField inSection:0]];
 		[cell.textView becomeFirstResponder];
 		return NO;
 	}
-	else {		
-		if	(![text isEmpty]) { // Only search if a character's been added.
-			
+	else {
+		// If a character has been added then try to get a match from the DB.
+
+		// Don't match on the Cat No field.
+		if ([textView tag] == kCatNoTextView ) {
+			return YES;
+		}
+
+		NSString *searchField;
+		switch ([textView tag]) {
+			case kTitleTextView:
+				searchField = @"title";
+				break;
+			case kArtistTextView:
+				searchField = @"artist";
+				break;
+			case kLabelTextView:
+				searchField = @"label";
+				break;
+		}
+			 
+		if	([text isEqualToString:@" "] || ![text isEmpty]) { 			
 			NSString *searchTerm = [[textView unselectedText] stringByAppendingString: text];
-			NSFetchRequest *request = [[NSFetchRequest alloc] init]; 
-			NSEntityDescription *entity = [NSEntityDescription entityForName:@"Music" 
-													  inManagedObjectContext:managedObjectContext]; 
-			[request setEntity:entity];
-			[request setFetchLimit: 1];
-			[request setResultType:NSDictionaryResultType];
-			NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES]; 
-			NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil]; 
-			[request setSortDescriptors:sortDescriptors]; 
+			NSMutableArray *resultsArray = [self resultsForSearchString: searchTerm forField: searchField];
 			
-			NSPredicate *labelPredicate = [NSPredicate predicateWithFormat:@"title BEGINSWITH[cd] %@", searchTerm];
-			[request setPredicate:labelPredicate];
-			
-			NSError *error; 
-			NSMutableArray *mutableFetchResults = [[managedObjectContext executeFetchRequest:request error:&error] mutableCopy]; 
-			if (mutableFetchResults == nil) {
-				// Handle the error.
-			}
-			
-			if ([mutableFetchResults count] == 0) {
+			if ([resultsArray count] == 0) {
 				NSLog(@"No match! %@", searchTerm);
 				return YES;
 			}
 			else {
-				NSString *firstMatch = [[mutableFetchResults objectAtIndex: 0] valueForKey:@"title"];
+				NSString *firstMatch = [[resultsArray objectAtIndex: 0] valueForKey: searchField];
 				[textView setText: firstMatch];
 				[textView setSelectedRange: NSMakeRange([searchTerm length], [firstMatch length] - [searchTerm length])];
 				return NO;
-			}
-			
-			[sortDescriptors release]; 
-			[sortDescriptor release];
+			}			
 		}
 		return YES;
 	}
@@ -225,6 +224,34 @@
 	
 	return YES;
 }
+
+#pragma mark -
+#pragma mark Get Item
+- (NSMutableArray*)resultsForSearchString:(NSString *)searchTerm forField:(NSString *) field {
+	NSFetchRequest *request = [[NSFetchRequest alloc] init]; 
+	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Music" 
+											  inManagedObjectContext:managedObjectContext]; 
+	[request setEntity:entity];
+	[request setFetchLimit: 1];
+	[request setResultType:NSDictionaryResultType];
+	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:field ascending:YES]; 
+	NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil]; 
+	[request setSortDescriptors:sortDescriptors]; 
+	
+	NSPredicate *labelPredicate = [NSPredicate predicateWithFormat:@"%K BEGINSWITH[cd] %@", field, searchTerm];
+	[request setPredicate:labelPredicate];
+	
+	NSError *error; 
+	NSMutableArray *mutableFetchResults = [[managedObjectContext executeFetchRequest:request error:&error] mutableCopy]; 
+	if (mutableFetchResults == nil) {
+		// Handle the error.
+	}
+
+	[sortDescriptors release]; 
+	[sortDescriptor release];
+	return mutableFetchResults;
+}
+
 
 #pragma mark -
 #pragma mark Memory management

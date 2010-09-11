@@ -24,7 +24,7 @@
 	NSManagedObjectContext     *managedObjectContext;
 
 	NSArray		*tableLabelNamesArray;	
-	UITableView *theTableView;	
+	UITableView *theTableView;		
 }
 
 @property(nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
@@ -33,9 +33,10 @@
 @property(nonatomic, retain) IBOutlet UITableView *theTableView;
 @property(nonatomic, retain) NSArray *tableLabelNamesArray;
 
-- (BOOL)createNewMusic;
+- (NSMutableArray*)resultsForSearchString:(NSString *)searchTerm forField:(NSString *) field;
+- (BOOL)createNewMusic;	
 
 - (IBAction)save:(id)sender;
-- (IBAction)cancel:(id)sender;
+- (IBAction)cancel:(id)sender;	
 
 @end
