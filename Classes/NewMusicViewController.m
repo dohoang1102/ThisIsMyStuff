@@ -9,6 +9,7 @@
 #import "NewMusicViewController.h"
 #import "Music.h"
 #import "NSString+Extensions.h"
+#import "UITextView+Extensions.h"
 
 @implementation NewMusicViewController
 
@@ -35,7 +36,6 @@
 	self.navigationItem.rightBarButtonItem = addButton;
 	[addButton release];
 	
-	// TODO: Will this leak?
 	[[NSNotificationCenter defaultCenter] addObserver:self 
 											 selector:@selector(textViewDidChange:) 
 												 name:@"UITextViewTextDidChangeNotification" 
@@ -62,13 +62,13 @@
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
 
-
-- (void)textViewDidChange:(id)sender {
+- (void)textViewDidChange:(UITextView *)textView {
 	
 }
 
+
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
-	NSLog(@"shouldChangeTextInRange: %@", text);
+		
 	if ([text isEqualToString:@"\n"]) {
 		[textView resignFirstResponder];		
 
@@ -100,7 +100,43 @@
 		[cell.textView becomeFirstResponder];
 		return NO;
 	}
-	else {
+	else {		
+		if	(![text isEmpty]) { // Only search if a character's been added.
+			
+			NSString *searchTerm = [[textView unselectedText] stringByAppendingString: text];
+			NSFetchRequest *request = [[NSFetchRequest alloc] init]; 
+			NSEntityDescription *entity = [NSEntityDescription entityForName:@"Music" 
+													  inManagedObjectContext:managedObjectContext]; 
+			[request setEntity:entity];
+			[request setFetchLimit: 1];
+			[request setResultType:NSDictionaryResultType];
+			NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES]; 
+			NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil]; 
+			[request setSortDescriptors:sortDescriptors]; 
+			
+			NSPredicate *labelPredicate = [NSPredicate predicateWithFormat:@"title BEGINSWITH[cd] %@", searchTerm];
+			[request setPredicate:labelPredicate];
+			
+			NSError *error; 
+			NSMutableArray *mutableFetchResults = [[managedObjectContext executeFetchRequest:request error:&error] mutableCopy]; 
+			if (mutableFetchResults == nil) {
+				// Handle the error.
+			}
+			
+			if ([mutableFetchResults count] == 0) {
+				NSLog(@"No match! %@", searchTerm);
+				return YES;
+			}
+			else {
+				NSString *firstMatch = [[mutableFetchResults objectAtIndex: 0] valueForKey:@"title"];
+				[textView setText: firstMatch];
+				[textView setSelectedRange: NSMakeRange([searchTerm length], [firstMatch length] - [searchTerm length])];
+				return NO;
+			}
+			
+			[sortDescriptors release]; 
+			[sortDescriptor release];
+		}
 		return YES;
 	}
 }

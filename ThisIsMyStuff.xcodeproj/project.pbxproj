@@ -22,6 +22,7 @@
 		EF4F828A123A8B55007E5E7F /* NSString+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = EF4F8289123A8B55007E5E7F /* NSString+Extensions.m */; };
 		EF7C61031239839B003C6EB8 /* AddItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7C61021239839B003C6EB8 /* AddItemCell.m */; };
 		EF7C6105123983CA003C6EB8 /* AddItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF7C6104123983CA003C6EB8 /* AddItemCell.xib */; };
+		EF8C77AF123B802500AB447A /* UITextView+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8C77AE123B802500AB447A /* UITextView+Extensions.m */; };
 		EFCDC2DE1234EDBB00E80AC1 /* MusicRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFCDC2DC1234EDBB00E80AC1 /* MusicRootViewController.m */; };
 		EFCDC2DF1234EDBB00E80AC1 /* MusicRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFCDC2DD1234EDBB00E80AC1 /* MusicRootViewController.xib */; };
 		EFCDC2EC1234EE2C00E80AC1 /* BooksRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFCDC2EA1234EE2C00E80AC1 /* BooksRootViewController.m */; };
@@ -59,6 +60,8 @@
 		EF7C61011239839B003C6EB8 /* AddItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddItemCell.h; sourceTree = "<group>"; };
 		EF7C61021239839B003C6EB8 /* AddItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddItemCell.m; sourceTree = "<group>"; };
 		EF7C6104123983CA003C6EB8 /* AddItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddItemCell.xib; sourceTree = "<group>"; };
+		EF8C77AD123B802500AB447A /* UITextView+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+Extensions.h"; sourceTree = "<group>"; };
+		EF8C77AE123B802500AB447A /* UITextView+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+Extensions.m"; sourceTree = "<group>"; };
 		EFCDC2DB1234EDBB00E80AC1 /* MusicRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicRootViewController.h; sourceTree = "<group>"; };
 		EFCDC2DC1234EDBB00E80AC1 /* MusicRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicRootViewController.m; sourceTree = "<group>"; };
 		EFCDC2DD1234EDBB00E80AC1 /* MusicRootViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MusicRootViewController.xib; sourceTree = "<group>"; };
@@ -167,6 +170,8 @@
 			children = (
 				EF4F8288123A8B55007E5E7F /* NSString+Extensions.h */,
 				EF4F8289123A8B55007E5E7F /* NSString+Extensions.m */,
+				EF8C77AD123B802500AB447A /* UITextView+Extensions.h */,
+				EF8C77AE123B802500AB447A /* UITextView+Extensions.m */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -299,6 +304,7 @@
 				EF213B17123683A500181E28 /* MusicItemViewController.m in Sources */,
 				EF7C61031239839B003C6EB8 /* AddItemCell.m in Sources */,
 				EF4F828A123A8B55007E5E7F /* NSString+Extensions.m in Sources */,
+				EF8C77AF123B802500AB447A /* UITextView+Extensions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
