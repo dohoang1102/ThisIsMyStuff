@@ -93,6 +93,12 @@
 			[self.navigationController pushViewController:labelsViewController animated:YES];
 			[labelsViewController release];
 		}
+		case kTitleRow: {
+			MusicItemViewController *itemViewController = [[MusicItemViewController alloc] init];
+			[itemViewController setManagedObjectContext:self.managedObjectContext];
+			[self.navigationController pushViewController:itemViewController animated:YES];
+			[itemViewController release];
+		}
 			break;
 		default:
 			break;

@@ -10,16 +10,18 @@
 #import "NewMusicViewController.h"
 #import "MusicArtistsViewController.h"
 #import "MusicLabelsViewController.h"
+#import "MusicItemViewController.h"
 
 #define kArtistRow	0
 #define kLabelRow	1
+#define kTitleRow   2
 
 
 @interface MusicRootViewController : UITableViewController {
 	NSArray *tableItems;
 	
 	NSFetchedResultsController *fetchedResultsController;
-	NSManagedObjectContext *managedObjectContext;
+	NSManagedObjectContext     *managedObjectContext;
 	
 	
 }

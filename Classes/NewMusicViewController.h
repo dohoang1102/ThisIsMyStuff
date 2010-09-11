@@ -16,6 +16,7 @@
 #define kArtistTextView		1
 #define kLabelTextView		2
 #define kCatNoTextView		3
+#define kFormatTextView		4
 
 #define kTableCellHeight	52
 
@@ -24,7 +25,9 @@
 	NSManagedObjectContext     *managedObjectContext;
 
 	NSArray		*tableLabelNamesArray;	
-	UITableView *theTableView;		
+	UITableView *theTableView;	
+	NSString	*itemArtist;
+	NSString    *itemLabel;
 }
 
 @property(nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
@@ -32,6 +35,8 @@
 
 @property(nonatomic, retain) IBOutlet UITableView *theTableView;
 @property(nonatomic, retain) NSArray *tableLabelNamesArray;
+@property(nonatomic, retain) NSString *itemArtist;
+@property(nonatomic, retain) NSString *itemLabel;
 
 - (NSMutableArray*)resultsForSearchString:(NSString *)searchTerm forField:(NSString *) field;
 - (BOOL)createNewMusic;	

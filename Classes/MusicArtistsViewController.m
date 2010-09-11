@@ -8,6 +8,8 @@
 
 #import "MusicArtistsViewController.h"
 #import "MusicItemViewController.h"
+#import "NewMusicViewController.h"
+#import "NSString+Extensions.h"
 
 @implementation MusicArtistsViewController
 
@@ -21,8 +23,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-	self.navigationItem.title = @"Music by artist.";
+
+	self.navigationItem.title = (self.labelFilter == nil) ? @"Music by artist" : self.labelFilter;
 	
+	// Add Button
+	UIBarButtonItem *addNewMusicButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd 
+																					   target:self 
+																					   action:@selector(pushAddMusicView:)];
+	self.navigationItem.rightBarButtonItem = addNewMusicButton;
+	[addNewMusicButton release];
+
 	// Get the music items by artist.
 	NSError *error;
 	if(![[self fetchedResultsController] performFetch:&error]) {
@@ -31,33 +41,21 @@
 }
 
 
-/*
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-}
-*/
-/*
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-}
-*/
-/*
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-}
-*/
-/*
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-}
-*/
-/*
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
-*/
+
+#pragma mark -
+#pragma mark Add Item
+- (void)pushAddMusicView:(id)sender {
+	NewMusicViewController *newMusicViewController = [[NewMusicViewController alloc] init];
+	newMusicViewController.managedObjectContext = self.managedObjectContext;
+	newMusicViewController.itemLabel = self.labelFilter;
+	[self presentModalViewController:newMusicViewController animated:YES];
+	[newMusicViewController release];
+}
 
 
 #pragma mark -

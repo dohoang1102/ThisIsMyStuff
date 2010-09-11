@@ -18,4 +18,5 @@
 	NSString *trimmedString = [self trim];
 	return [trimmedString isEqualToString: @""];
 }
+
 @end

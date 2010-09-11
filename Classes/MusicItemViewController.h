@@ -19,4 +19,6 @@
 @property(nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 @property(nonatomic, retain) NSString *artistFilter;
 
+- (void)pushAddMusicView:(id)sender;
+
 @end

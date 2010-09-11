@@ -15,5 +15,6 @@
 @dynamic title;
 @dynamic catNo;
 @dynamic artist;
+@dynamic format;
 
 @end

@@ -18,6 +18,8 @@
 
 @synthesize theTableView;
 @synthesize tableLabelNamesArray;
+@synthesize itemLabel;
+@synthesize itemArtist;
 
 #pragma mark -
 #pragma mark View lifecycle
@@ -25,7 +27,7 @@
 
 - (void)viewDidLoad {		
     [super viewDidLoad];
-	self.tableLabelNamesArray = [NSArray arrayWithObjects: @"Title", @"Artist", @"Label", @"Cat No", nil];
+	self.tableLabelNamesArray = [NSArray arrayWithObjects: @"Title", @"Artist", @"Label", @"Cat No", @"Format", nil];
 	self.navigationItem.title = @"Add New Item";
 	
 	UIBarButtonItem	*addButton = [[UIBarButtonItem alloc]
@@ -35,7 +37,7 @@
 	
 	self.navigationItem.rightBarButtonItem = addButton;
 	[addButton release];
-	
+		
 	[[NSNotificationCenter defaultCenter] addObserver:self 
 											 selector:@selector(textViewDidChange:) 
 												 name:@"UITextViewTextDidChangeNotification" 
@@ -60,6 +62,14 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+}
+
+#pragma mark -
+#pragma mark Text View Delegate methods
+- (void)textViewDidBeginEditing:(UITextView *)textView {
+	AddItemCell *cell = (AddItemCell*) [[textView superview] superview];
+	NSLog(@"textViewDidBeginEditing %@", cell);
+	[theTableView scrollToRowAtIndexPath:[theTableView indexPathForCell:cell] atScrollPosition:UITableViewScrollPositionTop animated:YES];
 }
 
 - (void)textViewDidChange:(UITextView *)textView {
@@ -90,6 +100,10 @@
 			}
 				break;
 			case kCatNoTextView: {
+				nextTextField = kFormatTextView;
+			}
+				break;
+			case kFormatTextView: {
 				nextTextField = kTitleTextView;
 			}
 				break;
@@ -118,6 +132,9 @@
 				break;
 			case kLabelTextView:
 				searchField = @"label";
+				break;
+			case kFormatTextView:
+				searchField = @"format";
 				break;
 		}
 			 
@@ -168,7 +185,21 @@
 		}		
 	}
 	cell.label.text = [self.tableLabelNamesArray objectAtIndex: row];
-	cell.textView.text = @"";
+	
+	switch (row) {
+		case kArtistTextView: {
+			cell.textView.text = self.itemArtist;
+		}
+			break;
+		case kLabelTextView: {
+			cell.textView.text = self.itemLabel;
+		}
+			break;
+		default: {
+			cell.textView.text = @"";
+		}
+			break;
+	}
     return cell;
 }
 
@@ -179,10 +210,11 @@
 #pragma mark -
 #pragma mark Add Item
 - (BOOL)createNewMusic {
-	AddItemCell *titleItemCell  = ((AddItemCell *)[self.theTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:kTitleTextView inSection:0]]);
+	AddItemCell *titleItemCell  = ((AddItemCell *)[self.theTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:kTitleTextView  inSection:0]]);
 	AddItemCell *artistItemCell = ((AddItemCell *)[self.theTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:kArtistTextView inSection:0]]);
-	AddItemCell *labelItemCell  = ((AddItemCell *)[self.theTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:kLabelTextView inSection:0]]); 
-	AddItemCell *catNoItemCell  = ((AddItemCell *)[self.theTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:kCatNoTextView inSection:0]]);
+	AddItemCell *labelItemCell  = ((AddItemCell *)[self.theTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:kLabelTextView  inSection:0]]); 
+	AddItemCell *catNoItemCell  = ((AddItemCell *)[self.theTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:kCatNoTextView  inSection:0]]);
+	AddItemCell *formatItemCell = ((AddItemCell *)[self.theTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:kFormatTextView inSection:0]]);
 		
 	// Title and Artist need to be populated.
 	BOOL itemIsValid = YES;
@@ -216,12 +248,12 @@
 	newMusic.artist = artistItemCell.textView.text;
 	newMusic.label  = labelItemCell.textView.text;
 	newMusic.catNo  = catNoItemCell.textView.text;
+	newMusic.format = formatItemCell.textView.text;
 	
 	NSError *error;
 	if (![managedObjectContext save:&error]) {
 		NSLog(@"Error saving: %@", [error description]);
 	}
-	
 	return YES;
 }
 
@@ -242,14 +274,14 @@
 	[request setPredicate:labelPredicate];
 	
 	NSError *error; 
-	NSMutableArray *mutableFetchResults = [[managedObjectContext executeFetchRequest:request error:&error] mutableCopy]; 
-	if (mutableFetchResults == nil) {
+	NSMutableArray *resultsArray = [[managedObjectContext executeFetchRequest:request error:&error] mutableCopy]; 
+	if (resultsArray == nil) {
 		// Handle the error.
 	}
 
 	[sortDescriptors release]; 
 	[sortDescriptor release];
-	return mutableFetchResults;
+	return resultsArray;
 }
 
 

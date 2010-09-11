@@ -17,6 +17,7 @@
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSString * catNo;
 @property (nonatomic, retain) NSString * artist;
+@property (nonatomic, retain) NSString * format;
 
 @end
 
