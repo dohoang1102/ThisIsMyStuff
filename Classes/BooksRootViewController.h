@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 
-@interface BooksRootViewController : UITableViewController {
+@interface BooksRootViewController : UIViewController {
 
 }
 

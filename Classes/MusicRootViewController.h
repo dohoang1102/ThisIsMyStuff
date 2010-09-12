@@ -17,13 +17,11 @@
 #define kTitleRow   2
 
 
-@interface MusicRootViewController : UITableViewController {
+@interface MusicRootViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
 	NSArray *tableItems;
 	
 	NSFetchedResultsController *fetchedResultsController;
 	NSManagedObjectContext     *managedObjectContext;
-	
-	
 }
 
 @property(nonatomic, retain) NSArray *tableItems;
