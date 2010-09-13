@@ -24,10 +24,11 @@
 	NSFetchedResultsController *fetchedResultsController;
 	NSManagedObjectContext     *managedObjectContext;
 
-	NSArray		*tableLabelNamesArray;	
-	UITableView *theTableView;	
-	NSString	*itemArtist;
-	NSString    *itemLabel;
+	NSArray				*tableLabelNamesArray;	
+	UITableView			*theTableView;	
+	NSString			*itemArtist;
+	NSString			*itemLabel;
+	UIViewController	*caller;
 }
 
 @property(nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
@@ -37,6 +38,7 @@
 @property(nonatomic, retain) NSArray *tableLabelNamesArray;
 @property(nonatomic, retain) NSString *itemArtist;
 @property(nonatomic, retain) NSString *itemLabel;
+@property(nonatomic, retain) UIViewController *caller;
 
 - (NSMutableArray*)resultsForSearchString:(NSString *)searchTerm forField:(NSString *) field;
 - (BOOL)createNewMusic;	

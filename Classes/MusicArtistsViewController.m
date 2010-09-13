@@ -53,6 +53,8 @@
 	NewMusicViewController *newMusicViewController = [[NewMusicViewController alloc] init];
 	newMusicViewController.managedObjectContext = self.managedObjectContext;
 	newMusicViewController.itemLabel = self.labelFilter;
+	NSLog(@"Passing in %@", [self description]);
+	newMusicViewController.caller = self;
 	[self presentModalViewController:newMusicViewController animated:YES];
 	[newMusicViewController release];
 }
@@ -92,6 +94,13 @@
     cell.textLabel.text = [[fetchedResultsController objectAtIndexPath:indexPath] valueForKey:@"artist"];
 	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
+}
+
+- (void)reloadTableData {
+	NSError *error;
+	if ([fetchedResultsController performFetch:&error]) {
+		[self.tableView reloadData];
+	}
 }
 
 #pragma mark -

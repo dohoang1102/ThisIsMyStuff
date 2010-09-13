@@ -20,12 +20,16 @@
 @interface MusicRootViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
 	NSArray *tableItems;
 	
-	NSFetchedResultsController *fetchedResultsController;
-	NSManagedObjectContext     *managedObjectContext;
+	NSFetchedResultsController	*fetchedResultsController;
+	NSManagedObjectContext		*managedObjectContext;
+	UITableView					*theTableView;
 }
 
 @property(nonatomic, retain) NSArray *tableItems;
 @property(nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
-@property(nonatomic, retain) NSManagedObjectContext *managedObjectContext;
+@property(nonatomic, retain) NSManagedObjectContext		*managedObjectContext;
+@property(nonatomic, retain) UITableView				*theTableView;
+
+- (void)reloadTableData;
 
 @end

@@ -13,6 +13,7 @@
 @synthesize tableItems;
 @synthesize fetchedResultsController;
 @synthesize managedObjectContext;
+@synthesize theTableView;
 
 #pragma mark -
 #pragma mark View lifecycle
@@ -27,7 +28,7 @@
 	self.navigationItem.rightBarButtonItem = addButton;
 	self.navigationItem.title = @"Music";
 	
-	self.tableItems = [NSArray arrayWithObjects:@"Artist", @"Label", @"Title", @"Year", nil];
+	self.tableItems = [NSArray arrayWithObjects:@"Artist", @"Label", @"Title", @"Format", nil];
 	
 	[addButton release];
 }
@@ -42,8 +43,15 @@
 - (void)pushAddMusicView:(id)sender {
 	NewMusicViewController *newMusicViewController = [[NewMusicViewController alloc] init];
 	newMusicViewController.managedObjectContext = self.managedObjectContext;
+	NSLog(@"Passing in %@", [self description]);
+	newMusicViewController.caller = self;
 	[self presentModalViewController:newMusicViewController animated:YES];
 	[newMusicViewController release];
+}
+
+- (void)reloadTableData {
+	NSLog(@"Reloading data!");
+	[theTableView reloadData];
 }
 
 #pragma mark -

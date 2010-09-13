@@ -20,6 +20,7 @@
 @synthesize tableLabelNamesArray;
 @synthesize itemLabel;
 @synthesize itemArtist;
+@synthesize caller;
 
 #pragma mark -
 #pragma mark View lifecycle
@@ -48,12 +49,15 @@
 - (IBAction)save:(id)sender {
 	if ([self createNewMusic]) {
 		[self dismissModalViewControllerAnimated:YES];
+		// Update the data for the page that opened this one.
+		if ([caller respondsToSelector:@selector(reloadTableData)]) {
+			[caller performSelector:@selector(reloadTableData)];
+		}
 	}
 }
 
 
 - (IBAction)cancel:(id)sender {
-	NSLog(@"cancel");
 	[self dismissModalViewControllerAnimated:YES];	
 }
 
@@ -143,7 +147,6 @@
 			NSMutableArray *resultsArray = [self resultsForSearchString: searchTerm forField: searchField];
 			
 			if ([resultsArray count] == 0) {
-				NSLog(@"No match! %@", searchTerm);
 				return YES;
 			}
 			else {
