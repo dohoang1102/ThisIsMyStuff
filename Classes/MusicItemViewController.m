@@ -15,6 +15,7 @@
 @synthesize fetchedResultsController;
 @synthesize managedObjectContext;
 @synthesize artistFilter;
+@synthesize labelFilter;
 
 #pragma mark -
 #pragma mark View lifecycle
@@ -44,6 +45,7 @@
 	NewMusicViewController *newMusicViewController = [[NewMusicViewController alloc] init];
 	newMusicViewController.managedObjectContext = self.managedObjectContext;
 	newMusicViewController.itemArtist = self.artistFilter;
+	newMusicViewController.itemLabel = self.labelFilter;
 	[self presentModalViewController:newMusicViewController animated:YES];
 	[newMusicViewController release];
 }
@@ -111,10 +113,20 @@
 		[fetchRequest setReturnsDistinctResults:YES];
 		[fetchRequest setPropertiesToFetch:[NSArray arrayWithObject:@"title"]];
 		
-		// TODO: Filter by artist (and maybe label)
+		
+		NSMutableArray *subpredicates = [NSMutableArray arrayWithCapacity:2];
+		if (self.labelFilter != nil) {
+			[subpredicates addObject:[NSPredicate predicateWithFormat:@"label = %@", self.labelFilter]];
+		}
+		
 		if (self.artistFilter != nil) {
-			NSPredicate *artistPredicate = [NSPredicate predicateWithFormat:@"artist = %@", self.artistFilter];
-			[fetchRequest setPredicate:artistPredicate];
+			[subpredicates addObject:[NSPredicate predicateWithFormat:@"artist = %@", self.artistFilter]];
+		}
+		
+		NSPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:subpredicates];
+		if ([subpredicates count] > 0) {
+			NSLog(@"Predicate is %@", [predicate description]);
+			[fetchRequest setPredicate:predicate];			
 		}
 		
 		// Sort by title.

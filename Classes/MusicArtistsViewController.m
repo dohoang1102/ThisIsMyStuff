@@ -111,7 +111,8 @@
 	
 	MusicItemViewController *itemViewController = [[MusicItemViewController alloc] init];
 	[itemViewController setManagedObjectContext:self.managedObjectContext];
-	itemViewController.artistFilter = artistFilter;
+	[itemViewController setArtistFilter:artistFilter];
+	[itemViewController setLabelFilter:labelFilter];
 	[self.navigationController pushViewController:itemViewController animated:YES];
 	[itemViewController release];
 }

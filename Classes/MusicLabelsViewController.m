@@ -27,34 +27,6 @@
 	}
 }
 
-/*
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-}
-*/
-/*
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-}
-*/
-/*
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-}
-*/
-/*
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-}
-*/
-/*
-// Override to allow orientations other than the default portrait orientation.
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-*/
-
 #pragma mark -
 #pragma mark Table view data source
 
@@ -97,11 +69,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	
 	NSString *selectedLabel = [[fetchedResultsController objectAtIndexPath:indexPath] valueForKey:@"label"];
-	MusicArtistsViewController *artistsViewContrller = [[MusicArtistsViewController alloc] init];
-	[artistsViewContrller setManagedObjectContext:self.managedObjectContext];
-	[artistsViewContrller setLabelFilter:selectedLabel];
-	[self.navigationController pushViewController:artistsViewContrller animated:YES];
-	[artistsViewContrller release];
+	MusicArtistsViewController *artistsViewController = [[MusicArtistsViewController alloc] init];
+	[artistsViewController setManagedObjectContext:self.managedObjectContext];
+	[artistsViewController setLabelFilter:selectedLabel];
+	[self.navigationController pushViewController:artistsViewController animated:YES];
+	[artistsViewController release];
 }
 		  
 #pragma mark -

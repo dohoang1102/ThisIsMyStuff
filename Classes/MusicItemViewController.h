@@ -13,11 +13,13 @@
 	NSFetchedResultsController *fetchedResultsController;
 	NSManagedObjectContext *managedObjectContext;
 	NSString *artistFilter;
+	NSString *labelFilter;
 }
 
 @property(nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
 @property(nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 @property(nonatomic, retain) NSString *artistFilter;
+@property(nonatomic, retain) NSString *labelFilter;
 
 - (void)pushAddMusicView:(id)sender;
 
