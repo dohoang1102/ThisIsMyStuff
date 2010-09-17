@@ -18,6 +18,8 @@
 @property (nonatomic, retain) NSString * catNo;
 @property (nonatomic, retain) NSString * artist;
 @property (nonatomic, retain) NSString * format;
+@property (nonatomic, retain) NSString * grouping;
+@property (nonatomic, retain) NSString * notes;
 
 @end
 

@@ -16,5 +16,7 @@
 @dynamic catNo;
 @dynamic artist;
 @dynamic format;
+@dynamic grouping;
+@dynamic notes;
 
 @end

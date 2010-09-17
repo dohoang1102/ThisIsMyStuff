@@ -17,6 +17,8 @@
 #define kLabelTextView		2
 #define kCatNoTextView		3
 #define kFormatTextView		4
+#define kGroupingTextView	5
+#define kNotesTextView		6
 
 #define kTableCellHeight	52
 

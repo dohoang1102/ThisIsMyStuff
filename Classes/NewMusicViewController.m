@@ -28,7 +28,7 @@
 
 - (void)viewDidLoad {		
     [super viewDidLoad];
-	self.tableLabelNamesArray = [NSArray arrayWithObjects: @"Title", @"Artist", @"Label", @"Cat No", @"Format", nil];
+	self.tableLabelNamesArray = [NSArray arrayWithObjects: @"Title", @"Artist", @"Label", @"Cat No", @"Format", @"Grouping", @"Notes", nil];
 	self.navigationItem.title = @"Add New Item";
 	
 	UIBarButtonItem	*addButton = [[UIBarButtonItem alloc]
@@ -73,7 +73,12 @@
 - (void)textViewDidBeginEditing:(UITextView *)textView {
 	AddItemCell *cell = (AddItemCell*) [[textView superview] superview];
 	NSLog(@"textViewDidBeginEditing %@", cell);
-	[theTableView scrollToRowAtIndexPath:[theTableView indexPathForCell:cell] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+	[theTableView setFrame:CGRectMake(0, 0, 320, 260)];
+	[theTableView scrollToRowAtIndexPath:[theTableView indexPathForCell:cell] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+}
+
+-(void)textViewDidEndEditing:(UITextView *)textView {
+	[theTableView setFrame:CGRectMake(0, 0, 320, 480)];
 }
 
 - (void)textViewDidChange:(UITextView *)textView {
@@ -108,6 +113,14 @@
 			}
 				break;
 			case kFormatTextView: {
+				nextTextField = kGroupingTextView;
+			}
+				break;
+			case kGroupingTextView: {
+				nextTextField = kNotesTextView;
+			}
+				break;
+			case kNotesTextView: {
 				nextTextField = kTitleTextView;
 			}
 				break;
@@ -121,8 +134,8 @@
 	else {
 		// If a character has been added then try to get a match from the DB.
 
-		// Don't match on the Cat No field.
-		if ([textView tag] == kCatNoTextView ) {
+		// Don't match on the Cat No or Notes fields.
+		if (([textView tag] == kCatNoTextView ) || ([textView tag] == kNotesTextView)) {
 			return YES;
 		}
 
@@ -139,6 +152,9 @@
 				break;
 			case kFormatTextView:
 				searchField = @"format";
+				break;
+			case kGroupingTextView:
+				searchField = @"grouping";
 				break;
 		}
 			 
@@ -213,11 +229,13 @@
 #pragma mark -
 #pragma mark Add Item
 - (BOOL)createNewMusic {
-	AddItemCell *titleItemCell  = ((AddItemCell *)[self.theTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:kTitleTextView  inSection:0]]);
-	AddItemCell *artistItemCell = ((AddItemCell *)[self.theTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:kArtistTextView inSection:0]]);
-	AddItemCell *labelItemCell  = ((AddItemCell *)[self.theTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:kLabelTextView  inSection:0]]); 
-	AddItemCell *catNoItemCell  = ((AddItemCell *)[self.theTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:kCatNoTextView  inSection:0]]);
-	AddItemCell *formatItemCell = ((AddItemCell *)[self.theTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:kFormatTextView inSection:0]]);
+	AddItemCell *titleItemCell    = ((AddItemCell *)[self.theTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:kTitleTextView    inSection:0]]);
+	AddItemCell *artistItemCell   = ((AddItemCell *)[self.theTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:kArtistTextView   inSection:0]]);
+	AddItemCell *labelItemCell    = ((AddItemCell *)[self.theTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:kLabelTextView    inSection:0]]); 
+	AddItemCell *catNoItemCell    = ((AddItemCell *)[self.theTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:kCatNoTextView    inSection:0]]);
+	AddItemCell *formatItemCell   = ((AddItemCell *)[self.theTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:kFormatTextView   inSection:0]]);
+	AddItemCell *groupingItemCell = ((AddItemCell *)[self.theTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:kGroupingTextView inSection:0]]);
+	AddItemCell *notesItemCell    = ((AddItemCell *)[self.theTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:kNotesTextView    inSection:0]]);
 		
 	// Title and Artist need to be populated.
 	BOOL itemIsValid = YES;
@@ -247,11 +265,13 @@
 													inManagedObjectContext:self.managedObjectContext];
 	
 	// Populate the new item from the table cells.	
-	newMusic.title  = titleItemCell.textView.text;
-	newMusic.artist = artistItemCell.textView.text;
-	newMusic.label  = labelItemCell.textView.text;
-	newMusic.catNo  = catNoItemCell.textView.text;
-	newMusic.format = formatItemCell.textView.text;
+	newMusic.title    = titleItemCell.textView.text;
+	newMusic.artist   = artistItemCell.textView.text;
+	newMusic.label    = labelItemCell.textView.text;
+	newMusic.catNo    = catNoItemCell.textView.text;
+	newMusic.format   = formatItemCell.textView.text;
+	newMusic.grouping = groupingItemCell.textView.text;
+	newMusic.notes    = notesItemCell.textView.text;
 	
 	NSError *error;
 	if (![managedObjectContext save:&error]) {
@@ -299,8 +319,8 @@
 }
 
 - (void)viewDidUnload {
-    // Relinquish ownership of anything that can be recreated in viewDidLoad or on demand.
-    // For example: self.myOutlet = nil;
+    self.tableLabelNamesArray = nil;
+	self.theTableView = nil;
 }
 
 
