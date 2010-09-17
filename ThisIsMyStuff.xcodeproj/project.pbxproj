@@ -27,6 +27,8 @@
 		EF7C61031239839B003C6EB8 /* AddItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7C61021239839B003C6EB8 /* AddItemCell.m */; };
 		EF7C6105123983CA003C6EB8 /* AddItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF7C6104123983CA003C6EB8 /* AddItemCell.xib */; };
 		EF8C77AF123B802500AB447A /* UITextView+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8C77AE123B802500AB447A /* UITextView+Extensions.m */; };
+		EF9BF93C1243593F006B68F0 /* MusicItemDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9BF93A1243593F006B68F0 /* MusicItemDetailsViewController.m */; };
+		EF9BF93D1243593F006B68F0 /* MusicItemDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF9BF93B1243593F006B68F0 /* MusicItemDetailsViewController.xib */; };
 		EFCDC2DE1234EDBB00E80AC1 /* MusicRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFCDC2DC1234EDBB00E80AC1 /* MusicRootViewController.m */; };
 		EFCDC2DF1234EDBB00E80AC1 /* MusicRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFCDC2DD1234EDBB00E80AC1 /* MusicRootViewController.xib */; };
 		EFCDC2EC1234EE2C00E80AC1 /* BooksRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFCDC2EA1234EE2C00E80AC1 /* BooksRootViewController.m */; };
@@ -70,6 +72,9 @@
 		EF7C6104123983CA003C6EB8 /* AddItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddItemCell.xib; sourceTree = "<group>"; };
 		EF8C77AD123B802500AB447A /* UITextView+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+Extensions.h"; sourceTree = "<group>"; };
 		EF8C77AE123B802500AB447A /* UITextView+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+Extensions.m"; sourceTree = "<group>"; };
+		EF9BF9391243593F006B68F0 /* MusicItemDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicItemDetailsViewController.h; sourceTree = "<group>"; };
+		EF9BF93A1243593F006B68F0 /* MusicItemDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicItemDetailsViewController.m; sourceTree = "<group>"; };
+		EF9BF93B1243593F006B68F0 /* MusicItemDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MusicItemDetailsViewController.xib; path = Classes/MusicItemDetailsViewController.xib; sourceTree = "<group>"; };
 		EFCDC2DB1234EDBB00E80AC1 /* MusicRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicRootViewController.h; sourceTree = "<group>"; };
 		EFCDC2DC1234EDBB00E80AC1 /* MusicRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicRootViewController.m; sourceTree = "<group>"; };
 		EFCDC2DD1234EDBB00E80AC1 /* MusicRootViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MusicRootViewController.xib; sourceTree = "<group>"; };
@@ -156,6 +161,7 @@
 				EFCDC3511234F65D00E80AC1 /* NewBookViewController.xib */,
 				EF3C348C1235A0E6007005DC /* MusicLabelsViewController.xib */,
 				EF213B16123683A500181E28 /* MusicItemViewController.xib */,
+				EF9BF93B1243593F006B68F0 /* MusicItemDetailsViewController.xib */,
 				EFD9515812351CA000E318F8 /* MusicArtistsViewController.xib */,
 				EFCDC2DD1234EDBB00E80AC1 /* MusicRootViewController.xib */,
 				EFCDC3571234F6F400E80AC1 /* NewMusicViewController.xib */,
@@ -209,6 +215,8 @@
 		EFCDC2E01234EDC900E80AC1 /* MusicViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				EF9BF9391243593F006B68F0 /* MusicItemDetailsViewController.h */,
+				EF9BF93A1243593F006B68F0 /* MusicItemDetailsViewController.m */,
 				EFCDC2DB1234EDBB00E80AC1 /* MusicRootViewController.h */,
 				EFCDC2DC1234EDBB00E80AC1 /* MusicRootViewController.m */,
 				EFCDC3551234F6F400E80AC1 /* NewMusicViewController.h */,
@@ -305,6 +313,7 @@
 				EF0270DA123B972A00F2AFDA /* disk.png in Resources */,
 				EF19D216123BA7C0002F970C /* icon.png in Resources */,
 				EF19D21A123BA881002F970C /* icon@2x.png in Resources */,
+				EF9BF93D1243593F006B68F0 /* MusicItemDetailsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -329,6 +338,7 @@
 				EF7C61031239839B003C6EB8 /* AddItemCell.m in Sources */,
 				EF4F828A123A8B55007E5E7F /* NSString+Extensions.m in Sources */,
 				EF8C77AF123B802500AB447A /* UITextView+Extensions.m in Sources */,
+				EF9BF93C1243593F006B68F0 /* MusicItemDetailsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

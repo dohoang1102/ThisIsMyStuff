@@ -8,6 +8,7 @@
 
 #import "MusicItemViewController.h"
 #import "NewMusicViewController.h"
+#import "MusicItemDetailsViewController.h"
 
 
 @implementation MusicItemViewController
@@ -92,14 +93,14 @@
 #pragma mark Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Navigation logic may go here. Create and push another view controller.
-	/*
-	 <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-	 [self.navigationController pushViewController:detailViewController animated:YES];
-	 [detailViewController release];
-	 */
+    NSString *currentTitle = [[fetchedResultsController objectAtIndexPath:indexPath] valueForKey:@"title"];
+	MusicItemDetailsViewController *detailViewController = [[MusicItemDetailsViewController alloc] init];
+    detailViewController.managedObjectContext = self.managedObjectContext;
+    detailViewController.labelFilter = self.labelFilter;
+    detailViewController.artistFilter = self.artistFilter;
+    detailViewController.titleFilter = currentTitle;
+   	[self.navigationController pushViewController:detailViewController animated:YES];
+	[detailViewController release];	
 }
 
 #pragma mark -
